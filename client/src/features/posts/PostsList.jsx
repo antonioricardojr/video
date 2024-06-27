@@ -12,7 +12,6 @@ function PostsList() {
                 const response = await fetch(API_URL);
                 if (response.ok) {
                     const json = await response.json();
-                    console.log(json)
                     setPosts(json);
                 } else {
                     throw response;
