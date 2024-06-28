@@ -5,15 +5,15 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
+# config/initializers/cors.rb
+
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    # where your request comes from, eg: your react app's IP address or URL.
-    origins "http://127.0.0.1:3000"
-    #origins "*"
-    #origins "https://super-cool-domain.com"
-    
-    resource "*",
-      headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+    origins 'http://localhost:5173'  # Replace with the origin you want to allow
+    resource '*',
+             headers: :any,
+             methods: [:get, :post, :put, :patch, :delete, :options, :head],
+             credentials: false
   end
 end
+
