@@ -7,6 +7,7 @@ function PostDetails() {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     console.log('id: ', id)
     console.log(`${API_URL}/${id}`)
@@ -31,6 +32,22 @@ function PostDetails() {
 
     }, [id]);
 
+    const deletePost = async () => {
+        // It deletes the post by the id and then redirects to the home page
+        try {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: "DELETE",
+            });
+            if (response.ok) {
+                navigate('/');
+            } else {
+                throw response;
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     if (loading) {
         return <h2>Loading...</h2>
     }
@@ -40,6 +57,8 @@ function PostDetails() {
             <h2>{ post.title }</h2>
             <p>{ post.body }</p>
             <Link to="/">Back to Posts</Link>
+            {" | "}
+            <button onClick={deletePost}>Delete</button>
         </div>
     )
 }
