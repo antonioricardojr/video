@@ -27,6 +27,23 @@ function PostsList() {
         loadPosts();
     }, [])
 
+    const deletePost = async (id) => {
+        // it deletes a post by id and then reloads the posts filtering out the deleted post
+        try {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: "DELETE",
+            });
+            if (response.ok) {
+                setPosts(posts.filter((post) => post.id !== id));
+            } else {
+                throw response;
+            }
+        } catch (e) {
+            console.log("An error occurred: ", e);
+        }
+
+    }
+
 
     // Fetch posts from the API
     return <div>
@@ -37,7 +54,9 @@ function PostsList() {
                 {post.title}
                 </Link>
             </h2>
-            <p>{post.body}</p>
+            <div className="post-links">
+                <button onClick={() => deletePost(post.id)}>Delete</button>
+            </div>
         </div>
     ))}
 </div>
