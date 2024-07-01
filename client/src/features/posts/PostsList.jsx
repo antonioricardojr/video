@@ -23,7 +23,7 @@ function PostsList() {
         loadPosts();
     }, [])
 
-    const handleDeletePost = async (id) => {
+    const deletePostHandler = async (id) => {
         // it deletes a post by id and then reloads the posts filtering out the deleted post
         try {
             await deletePost(id);
@@ -47,7 +47,7 @@ function PostsList() {
             <div className="post-links">
                 <Link to={`/posts/${post.id}/edit`}>Edit</Link>
                 {" | "}
-                <button onClick={() => handleDeletePost(post.id)}>Delete</button>
+                <button onClick={() => deletePostHandler(post.id)}>Delete</button>
             </div>
         </div>
     ))}

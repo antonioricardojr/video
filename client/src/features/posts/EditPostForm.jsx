@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../constants";
+import { fetchPost, updatePost } from "../../services/postService";
 
 function EditPostForm() {
     const [post, setPost] = useState(null);
@@ -12,38 +12,21 @@ function EditPostForm() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`${API_URL}/${id}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setPost(data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error);
-                setLoading(false);
-            });
+        fetchPost(id)
+        .then((data) => {
+            setPost(data);
+            setLoading(false);
+         }).catch((error) => {
+            setError(error);
+            setLoading(false);
+         });
     }, [id])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await fetch(`${API_URL}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                title: post.title,
-                body: post.body
-            })
-        })
-        .then((response) => {
-            if (response.ok) {
-                console.log('response.ok', response.ok)
-                navigate(`/posts/${id}`);
-            } else {
-                console.log('An error occurred.');
-            }
-        })
+        console.log('clicked')
+        await updatePost(id, post);
+        navigate(`/posts/${id}`);
     }
 
     if (!post) {

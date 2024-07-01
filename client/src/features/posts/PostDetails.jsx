@@ -25,7 +25,7 @@ function PostDetails() {
 
     }, [id]);
 
-    const handleDeletePost = async () => {
+    const deletePostHandler = async () => {
         // It deletes the post by the id and then redirects to the home page
         try {
             await deletePost(id);
@@ -47,7 +47,7 @@ function PostDetails() {
             {" | "}
             <Link to="/">Back to Posts</Link>
             {" | "}
-            <button onClick={handleDeletePost}>Delete</button>
+            <button onClick={deletePostHandler}>Delete</button>
         </div>
     )
 }
