@@ -1,6 +1,6 @@
 // API_URL comes from the .env.development file
 import React, { useState, useEffect } from "react";
-import { API_URL } from "../../constants";
+import { deletePost, fetchAllPosts } from "../../services/postService";
 import { Link } from "react-router-dom";
 function PostsList() {
     const [ posts, setPosts ] = useState([]);
@@ -10,13 +10,9 @@ function PostsList() {
     useEffect(() => {
         async function loadPosts() {
             try {
-                const response = await fetch(API_URL);
-                if (response.ok) {
-                    const json = await response.json();
-                    setPosts(json);
-                } else {
-                    throw response;
-                }
+                const posts = await fetchAllPosts();
+                setPosts(posts);
+                setLoading(false);
             } catch (e) {
                 setError("An error occurred. Awkward...")
                 console.log("An error occurred: ", e)
@@ -27,17 +23,11 @@ function PostsList() {
         loadPosts();
     }, [])
 
-    const deletePost = async (id) => {
+    const handleDeletePost = async (id) => {
         // it deletes a post by id and then reloads the posts filtering out the deleted post
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: "DELETE",
-            });
-            if (response.ok) {
-                setPosts(posts.filter((post) => post.id !== id));
-            } else {
-                throw response;
-            }
+            await deletePost(id);
+            setPosts(posts.filter((post) => post.id !== id));
         } catch (e) {
             console.log("An error occurred: ", e);
         }
@@ -57,7 +47,7 @@ function PostsList() {
             <div className="post-links">
                 <Link to={`/posts/${post.id}/edit`}>Edit</Link>
                 {" | "}
-                <button onClick={() => deletePost(post.id)}>Delete</button>
+                <button onClick={() => handleDeletePost(post.id)}>Delete</button>
             </div>
         </div>
     ))}
