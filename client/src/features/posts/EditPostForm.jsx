@@ -19,14 +19,18 @@ function EditPostForm() {
          }).catch((error) => {
             setError(error);
             setLoading(false);
+            console.error('Failed to fetch the post: ', error)
          });
     }, [id])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('clicked')
-        await updatePost(id, post);
-        navigate(`/posts/${id}`);
+        try {
+            await updatePost(id, post);
+            navigate(`/posts/${post.id}`);
+        } catch (error) {
+            console.error("Failed to update the post: ", error);
+        }
     }
 
     if (!post) {
