@@ -17,7 +17,7 @@ function PostDetails() {
                 setPost(data);
                 setLoading(false);
             } catch (error) {
-                console.log(error)
+                console.error("Failed to fetch the post: ", error)
             }
         };
 
@@ -31,7 +31,7 @@ function PostDetails() {
             await deletePost(id);
             navigate('/');
         } catch (error) {
-            console.log(error)
+            console.error("Failed to delete the post: ", error)
         }
     }
 
