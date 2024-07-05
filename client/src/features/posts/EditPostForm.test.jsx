@@ -59,8 +59,8 @@ describe('EditPostForm component', () => {
             body: "New Post Body"
         }
 
-        fireEvent.change(screen.getByLabelText("Title"), { target: { value: newPost.title } });
-        fireEvent.change(screen.getByLabelText("Body"), { target: { value: newPost.body } });
+        fireEvent.change(screen.getByLabelText("Title:"), { target: { value: newPost.title } });
+        fireEvent.change(screen.getByLabelText("Body:"), { target: { value: newPost.body } });
 
         await act(async () => {
             fireEvent.click(screen.getByText("Save"));

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchPost, updatePost } from "../../services/postService";
+import PostForm from "./PostForm";
 
 function EditPostForm() {
     const [post, setPost] = useState(null);
@@ -23,8 +24,7 @@ function EditPostForm() {
          });
     }, [id])
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleEditSubmit = async (post) => {
         try {
             await updatePost(id, post);
             navigate(`/posts/${post.id}`);
@@ -38,25 +38,11 @@ function EditPostForm() {
     }
 
     return (
-        <div><h2>Edit Post</h2>
-        
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="post-title">Title</label>
-                <br />
-                <input type="text" id="post-title" value={post?.title} 
-                onChange={(e) => setPost({...post, title: e.target.value})}/>
-            </div>
-            <div>
-                <label htmlFor="post-body">Body</label>
-                <textarea id="post-body" value={post?.body}
-                onChange={(e) => setPost({...post, body: e.target.value})}></textarea>
-            </div>
-            <div>
-                <button type="submit">Save</button>
-            </div>
-        </form>
-        </div>
+        <PostForm 
+            post={post}
+            headerText="Edit Post"
+            onSubmit={handleEditSubmit}
+            buttonText="Save" />
     )
 }
 
