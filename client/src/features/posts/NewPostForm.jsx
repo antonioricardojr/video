@@ -1,19 +1,15 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../services/postService";
+import PostForm from "./PostForm";
 
 function NewPostForm() {
 
-    const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleCreateSubmit = async (formData) => {
 
         try {
-            const postData = { title, body }
-            var response = await createPost(postData);
+            var response = await createPost(formData);
             navigate(`/posts/${response.id}`);
         } catch (error) {
             console.error("Failed to create post: ", error);    
@@ -21,30 +17,11 @@ function NewPostForm() {
     }
 
     return (
-        <div>
-            <h2>Create a new Post</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="titleInput">Title:</label>
-                    <input id="titleInput" type="text" value={title} 
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="bodyInput">Body:</label>
-                    <textarea id="bodyInput" value={body} 
-                    onChange={(e) => setBody(e.target.value)}
-                    required
-                    >
-                    </textarea>
-                </div>
-                <div>
-                    <button type="submit">Create Post</button>
-                </div>
-            </form>
-        </div>
+        <PostForm 
+            headerText="Create a New Post"
+            onSubmit={handleCreateSubmit}
+            buttonText="Create Post"
+        />
     )
 }
 
