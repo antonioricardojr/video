@@ -4,10 +4,7 @@ import { API_URL } from "../constants";
 async function createPost(postData) {
     const response = await fetch(API_URL, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
+        body: postData,
     });
     if (response.ok) {
         return await response.json();
@@ -49,10 +46,7 @@ async function deletePost(id) {
 async function updatePost(id, postData) {
     const response = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
+        body: postData,
     });
     if (response.ok) {
         return await response.json();

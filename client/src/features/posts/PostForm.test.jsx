@@ -16,7 +16,8 @@ describe('PostForm', () => {
     it('renders passed in post data', () => {
         const mockPost = {
             title: "Test Post",
-            body: "This is a test post"
+            body: "This is a test post",
+            image: null
         }
 
         const mockSubmit = jest.fn();
@@ -33,7 +34,8 @@ describe('PostForm', () => {
     it('updates the input value on change', () => {
         const mockPost = {
             title: "Test Post",
-            body: "This is a test post"
+            body: "This is a test post",
+            image: null
         }
 
         const mockSubmit = jest.fn();
@@ -56,6 +58,7 @@ describe('PostForm', () => {
 
         const titleInput = getByLabelText('Title:');
         const bodyInput = getByLabelText('Body:');
+        const imageInput = getByLabelText('Image:');
         const newTitle = "New Title";
         const newBody = "New Body";
 
@@ -67,7 +70,7 @@ describe('PostForm', () => {
         });
 
         expect(mockSubmit).toHaveBeenCalledTimes(1);
-        expect(mockSubmit).toHaveBeenCalledWith({ title: newTitle, body: newBody });
+        expect(mockSubmit).toHaveBeenCalledWith({ title: newTitle, body: newBody, image: ""});
 
     })
 

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 function PostForm({ post, headerText, onSubmit, buttonText }) {
 
-    const [formData, setFormData] = useState(post || { title: "", body: "" } );
+    const [formData, setFormData] = useState(post || { title: "", body: "", image: "" } );
 
     return  (
         <div>
@@ -24,6 +24,21 @@ function PostForm({ post, headerText, onSubmit, buttonText }) {
                             title: e.target.value
                         })}
                     required
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="image">Image:</label>
+                    <input 
+                    id="image" 
+                    type="file" 
+                    accept="image/*"
+                    onChange={(e) => {setFormData(
+                        {...formData, 
+                            image: e.target.files[0]
+                        })
+                        console.log(e.target.files[0]);
+                    }}
                     />
                 </div>
 

@@ -6,7 +6,13 @@ function NewPostForm() {
 
     const navigate = useNavigate();
 
-    const handleCreateSubmit = async (formData) => {
+    const handleCreateSubmit = async (rawData) => {
+
+        const formData = new FormData();
+
+        formData.append("post[title]", rawData.title);
+        formData.append("post[body]", rawData.body);
+        formData.append("post[image]", rawData.image);
 
         try {
             var response = await createPost(formData);
