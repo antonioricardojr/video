@@ -89,3 +89,47 @@ describe('PostsList component', () => {
     });
 
 });
+
+describe('PostList component image_url rendering', () => {
+    const mockPostWithImageUrl = [
+        {
+            id: 1,
+            title: "Post with Image",
+            body: "Hello World!",
+            image_url: "https://picsum.photos/200",
+        }
+    ]
+    
+    const mockPostWithoutImageUrl = [
+        {
+            id: 2,
+            title: "Post without Image",
+            body: "Hello World!",
+            image_url: null
+        }
+    ]
+
+    test('renders the image with image_url exists', async () => {
+        postService.fetchAllPosts.mockResolvedValue(mockPostWithImageUrl);
+        render(<PostsList />, { wrapper: MemoryRouter });
+        await waitFor(() => screen.getByText(mockPostWithImageUrl[0].title));
+
+
+        const imgElement = screen.getByAltText(mockPostWithImageUrl[0].title);
+        expect(imgElement).toBeInTheDocument();
+        expect(imgElement.src).toBe(mockPostWithImageUrl[0].image_url);
+
+    });
+
+    test('renders the placeholder div when image_url does not exist', async () => {
+        postService.fetchAllPosts.mockResolvedValue(mockPostWithoutImageUrl);
+
+        render(<PostsList />, { wrapper: MemoryRouter });
+
+        await waitFor(() => screen.getByText(mockPostWithoutImageUrl[0].title));
+
+        const placeholderDiv = screen.getByTestId("post-image-stub");
+        expect(placeholderDiv).toBeInTheDocument();
+
+    })
+})

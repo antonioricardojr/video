@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import PostForm from './PostForm';
 import { act } from 'react';
+import { waitFor } from '@testing-library/dom';
+import { fetchAllPosts } from '../../services/postService';
 
 describe('PostForm', () => {
     // post is null by default, for the instance when a new post is being created
@@ -71,6 +73,26 @@ describe('PostForm', () => {
 
         expect(mockSubmit).toHaveBeenCalledTimes(1);
         expect(mockSubmit).toHaveBeenCalledWith({ title: newTitle, body: newBody, image: ""});
+
+    })
+
+    it('handles image file upload', () => {
+        const mockSubmit = jest.fn();
+        const buttonText = "Submit";
+        const headerText = "New Post";
+
+        const consoleSpy = jest.spyOn(console, "log");
+        consoleSpy.mockImplementation(() => {});
+
+        const { getByLabelText } = render(
+            <PostForm headerText={headerText} onSubmit={mockSubmit} buttonText={buttonText}/>
+        )
+
+        // Mock a file upload
+        const file = new File(['(⌐□_□)'], 'sample.png', { type: 'image/png' });
+        const imageInput = getByLabelText('Image:');
+        fireEvent.change(imageInput, { target: { files: [file] } });
+        expect(consoleSpy).toHaveBeenCalledWith(file);
 
     })
 
