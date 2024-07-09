@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../services/postService";
 import PostForm from "./PostForm";
+import { objectToFormData } from "../../utils/formDataHelper";
 
 function NewPostForm() {
 
@@ -8,13 +9,9 @@ function NewPostForm() {
 
     const handleCreateSubmit = async (rawData) => {
 
-        const formData = new FormData();
-
-        formData.append("post[title]", rawData.title);
-        formData.append("post[body]", rawData.body);
-        formData.append("post[image]", rawData.image);
 
         try {
+            const formData = objectToFormData({post: rawData})
             var response = await createPost(formData);
             navigate(`/posts/${response.id}`);
         } catch (error) {
