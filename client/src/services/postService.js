@@ -13,8 +13,8 @@ async function createPost(postData) {
     }
 }
 
-async function fetchAllPosts() {
-    const response = await fetch(API_URL);
+async function fetchAllPosts(page=1) {
+    const response = await fetch(`${API_URL}/?page=${page}`);
     if (response.ok) {
         return await response.json();
     } else {
