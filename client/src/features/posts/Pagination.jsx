@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-
+import "./PostImage.css";
 
 function Pagination({ currentPage, totalPosts, postsPerPage, onPageChange }) {
     const totalPages = Math.ceil(totalPosts / postsPerPage);
@@ -48,18 +48,18 @@ function Pagination({ currentPage, totalPosts, postsPerPage, onPageChange }) {
 
     return (
         <div>
-            <button onClick={handlePrevious} disabled={currentPage === 1}>
+            <button className='btn-previous' onClick={handlePrevious} disabled={currentPage === 1}>
                 Previous
             </button>
 
             {getVisiblePageNumbers().map((page, index) => 
                 typeof page === 'number' ? (
-                    <button key={page} onClick={() => onPageChange(page)} disabled={currentPage === page}>{page}</button>
+                    <button className='btn-squared' key={page} onClick={() => onPageChange(page)} disabled={currentPage === page}>{page}</button>
                 ) : (
-                    <span key={`ellipsis-${index}`} style={{margin: "0 5px"}}>...</span>
+                    <span className='btn-ellipsis' key={`ellipsis-${index}`} style={{margin: "0 5px"}}>...</span>
                  )
             )}
-            <button onClick={handleNext} disabled={currentPage === totalPages || totalPages === 0}>
+            <button className='btn-next' onClick={handleNext} disabled={currentPage === totalPages || totalPages === 0}>
                 Next
             </button>
         </div>
