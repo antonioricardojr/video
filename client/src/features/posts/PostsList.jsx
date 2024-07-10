@@ -3,14 +3,11 @@ import { useState, useEffect } from "react";
 import { deletePost } from "../../services/postService";
 import { Link, useSearchParams } from "react-router-dom";
 import "./PostImage.css";
-
 import SearchBar from "./SearchBar";
 import usePostsData from "../../hooks/usePostsData";
 import useURLSearchParam from "../../hooks/useURLSearchParam";
 
 import Pagination from "./Pagination";
-
-
 function PostsList() {
     const [searchTerm, setSearchTerm] = useState("");
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useURLSearchParam("");
@@ -85,7 +82,7 @@ function PostsList() {
         {error && <p>Error loading posts...</p>}
         {posts.map((post) => (
             <div key={post.id} className="post-container">
-                <h2>
+                <h2 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                     <Link to={`/posts/${post.id}`} className="post-title">
                     {post.title}
                     </Link>
@@ -93,9 +90,9 @@ function PostsList() {
                 <div className="post-image-container">
                     {post.image_url ? 
                         (
-                            <img src={post.image_url} alt={post.title} className="post-image" />
+                            <img src={post.image_url} alt={post.title} className="w-80 h-40 object-cover rounded-lg border border-gray-300 shadow-md" />
                         ) : (
-                            <div className="post-image-stub" data-testid="post-image-stub"/>
+                            <div className="w-80 h-40 object-cover rounded-lg border border-gray-300 shadow" data-testid="post-image-stub"/>
                     )}
                 </div>
                 <div className="post-links">
