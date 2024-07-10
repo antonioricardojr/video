@@ -50,3 +50,5 @@ end
 
 #gem "gem", "~> 0.0.1.alpha"
 gem "rails-controller-testing", "~> 1.0"
+
+gem "kaminari", "~> 1.2"
